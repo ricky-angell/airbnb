@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Airbnb Arbitrage Blueprint | Angell</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#FAF7F2;
+  --teal:#1A5C6B;
+  --teal-deep:#0E3E49;
+  --gold:#C4974A;
+  --gold-soft:#E8D5B0;
+  --ink:#26221C;
+  --paper:#FFFFFF;
+  --line:#E5DDD0;
+  --green:#3E7C4F;
+  --red:#A6433B;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Source Serif 4',Georgia,serif;background:var(--cream);color:var(--ink);line-height:1.65;font-size:17px;}
+h1,h2,h3,h4,.label{font-family:'Archivo',sans-serif;}
+.mono{font-family:'JetBrains Mono',monospace;}
+a{color:var(--teal);}
+
+/* ===== HERO ===== */
+.hero{background:var(--teal-deep);color:var(--cream);padding:64px 24px 56px;position:relative;overflow:hidden;}
+.hero::after{content:"";position:absolute;right:-80px;top:-80px;width:340px;height:340px;border:2px solid rgba(196,151,74,.35);border-radius:50%;}
+.hero::before{content:"";position:absolute;right:40px;top:120px;width:180px;height:180px;border:2px solid rgba(196,151,74,.2);border-radius:50%;}
+.hero-inner{max-width:880px;margin:0 auto;position:relative;z-index:2;}
+.brand-logo{display:block;margin-bottom:18px;}
+.foot .brand-logo{margin:0 auto 12px;}
+.eyebrow{font-family:'Archivo',sans-serif;font-weight:700;letter-spacing:.18em;text-transform:uppercase;font-size:12px;color:var(--gold);margin-bottom:18px;}
+.hero h1{font-size:clamp(36px,6vw,62px);font-weight:900;line-height:1.04;letter-spacing:-.02em;margin-bottom:20px;}
+.hero h1 em{font-style:normal;color:var(--gold);}
+.hero p.sub{font-size:19px;max-width:620px;color:rgba(250,247,242,.85);}
+.hero-stats{display:flex;gap:36px;margin-top:36px;flex-wrap:wrap;}
+.hstat{border-left:3px solid var(--gold);padding-left:14px;}
+.hstat .n{font-family:'Archivo',sans-serif;font-weight:800;font-size:26px;color:var(--gold);}
+.hstat .l{font-size:13px;text-transform:uppercase;letter-spacing:.1em;font-family:'Archivo',sans-serif;color:rgba(250,247,242,.7);}
+
+/* ===== NAV ===== */
+.nav{position:sticky;top:0;background:var(--cream);border-bottom:1px solid var(--line);z-index:50;overflow-x:auto;}
+.nav-inner{max-width:980px;margin:0 auto;display:flex;gap:4px;padding:0 16px;white-space:nowrap;}
+.nav a{font-family:'Archivo',sans-serif;font-size:13px;font-weight:700;text-decoration:none;color:var(--teal);padding:14px 12px;display:inline-block;border-bottom:3px solid transparent;}
+.nav a:hover{border-bottom-color:var(--gold);}
+
+/* ===== LAYOUT ===== */
+.wrap{max-width:880px;margin:0 auto;padding:0 24px;}
+section{padding:56px 0 8px;}
+.step-tag{display:inline-flex;align-items:center;gap:10px;font-family:'Archivo',sans-serif;font-weight:800;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+.step-tag::before{content:"";width:34px;height:2px;background:var(--gold);}
+h2{font-size:clamp(26px,4vw,38px);font-weight:900;letter-spacing:-.01em;color:var(--teal-deep);margin-bottom:16px;line-height:1.1;}
+h3{font-size:20px;font-weight:800;color:var(--teal);margin:28px 0 10px;}
+p{margin-bottom:14px;}
+ul.plain{margin:0 0 16px 22px;}
+ul.plain li{margin-bottom:8px;}
+
+/* ===== CARDS ===== */
+.card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:24px 26px;margin:18px 0;box-shadow:0 1px 3px rgba(38,34,28,.05);}
+.card h4{font-size:16px;font-weight:800;color:var(--teal-deep);margin-bottom:8px;}
+.card.gold{border-left:5px solid var(--gold);}
+.card.teal{border-left:5px solid var(--teal);}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+@media(max-width:680px){.grid2{grid-template-columns:1fr;}}
+
+/* ===== SCRIPT BLOCKS ===== */
+.script{background:var(--teal-deep);color:var(--cream);border-radius:14px;padding:24px 26px;margin:18px 0;position:relative;}
+.script .s-label{font-family:'Archivo',sans-serif;font-weight:800;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;display:block;}
+.script p{font-size:16px;color:rgba(250,247,242,.92);}
+.script .copy-btn{position:absolute;top:18px;right:18px;background:var(--gold);color:var(--teal-deep);border:none;font-family:'Archivo',sans-serif;font-weight:800;font-size:12px;padding:7px 14px;border-radius:7px;cursor:pointer;letter-spacing:.06em;}
+.script .copy-btn:hover{background:var(--gold-soft);}
+.script .copy-btn:focus-visible{outline:3px solid var(--cream);outline-offset:2px;}
+
+/* ===== LINK BUTTONS ===== */
+.linkrow{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 20px;}
+.lbtn{display:inline-flex;align-items:center;gap:8px;background:var(--teal);color:var(--cream);text-decoration:none;font-family:'Archivo',sans-serif;font-weight:700;font-size:14px;padding:11px 18px;border-radius:9px;transition:background .15s;}
+.lbtn:hover{background:var(--teal-deep);}
+.lbtn.alt{background:var(--paper);color:var(--teal);border:2px solid var(--teal);}
+.lbtn.alt:hover{background:var(--gold-soft);}
+.lbtn span.arrow{color:var(--gold);}
+
+/* ===== TABLES ===== */
+table{width:100%;border-collapse:collapse;margin:18px 0;background:var(--paper);border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:15px;}
+th{font-family:'Archivo',sans-serif;font-weight:800;font-size:12px;letter-spacing:.1em;text-transform:uppercase;text-align:left;background:var(--teal-deep);color:var(--cream);padding:12px 14px;}
+td{padding:12px 14px;border-top:1px solid var(--line);vertical-align:top;}
+tr:nth-child(even) td{background:#FCFAF6;}
+td.good{color:var(--green);font-weight:600;}
+td.bad{color:var(--red);font-weight:600;}
+
+/* ===== CHECKLIST ===== */
+.check{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:10px 8px;margin:18px 0;}
+.check label{display:flex;align-items:flex-start;gap:12px;padding:11px 16px;border-radius:8px;cursor:pointer;font-size:16px;}
+.check label:hover{background:var(--cream);}
+.check input{width:20px;height:20px;accent-color:var(--gold);margin-top:3px;flex-shrink:0;}
+.check input:checked+span{text-decoration:line-through;opacity:.55;}
+
+/* ===== CALLOUTS ===== */
+.note{border:1px dashed var(--gold);background:#FDF8EF;border-radius:12px;padding:18px 22px;margin:18px 0;font-size:16px;}
+.note b{font-family:'Archivo',sans-serif;color:var(--teal-deep);}
+.warn{border-left:5px solid var(--red);background:#FBF1F0;border-radius:0 12px 12px 0;padding:18px 22px;margin:18px 0;font-size:16px;}
+
+/* ===== MATH BOX ===== */
+.math{background:var(--paper);border:2px solid var(--teal);border-radius:14px;padding:22px 26px;margin:18px 0;}
+.math .row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line);font-size:16px;}
+.math .row:last-child{border-bottom:none;border-top:2px solid var(--teal);margin-top:6px;padding-top:14px;font-family:'Archivo',sans-serif;font-weight:800;font-size:18px;color:var(--teal-deep);}
+.math .row .neg{color:var(--red);}
+.math .row .pos{color:var(--green);}
+
+
+/* ===== PROGRESS TRACKING ===== */
+.progress-wrap{max-width:980px;margin:0 auto;padding:8px 16px 10px;}
+.progress-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.progress-label{font-family:'Archivo',sans-serif;font-weight:800;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);}
+.progress-pct{font-family:'Archivo',sans-serif;font-weight:800;font-size:13px;color:var(--gold);}
+.progress-track{height:8px;background:var(--line);border-radius:99px;overflow:hidden;}
+.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--gold),var(--teal));border-radius:99px;transition:width .4s ease;}
+.done-btn{display:inline-flex;align-items:center;gap:8px;font-family:'Archivo',sans-serif;font-weight:800;font-size:14px;letter-spacing:.04em;background:var(--paper);color:var(--teal);border:2px solid var(--teal);padding:12px 22px;border-radius:10px;cursor:pointer;margin:8px 0 28px;transition:all .15s;}
+.done-btn:hover{background:var(--gold-soft);}
+.done-btn:focus-visible{outline:3px solid var(--gold);outline-offset:2px;}
+.done-btn.is-done{background:var(--green);border-color:var(--green);color:#fff;}
+.nav a.nav-done::after{content:" \2713";color:var(--green);font-weight:900;}
+
+/* ===== FOOTER ===== */
+.foot{background:var(--teal-deep);color:rgba(250,247,242,.7);text-align:center;padding:40px 24px;margin-top:64px;font-size:14px;}
+.foot .logo{font-family:'Archivo',sans-serif;font-weight:900;font-size:18px;color:var(--gold);letter-spacing:.04em;margin-bottom:6px;}
+
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto;}}
+
+/* ===== ACCESS GATE ===== */
+#angellGate{position:fixed;inset:0;z-index:99999;background:var(--cream);display:flex;align-items:center;justify-content:center;padding:24px;}
+#angellGate .box{max-width:440px;width:100%;text-align:center;background:var(--paper);border:1px solid var(--line);border-top:6px solid var(--gold);border-radius:18px;padding:44px 36px;box-shadow:0 12px 40px rgba(38,34,28,.12);}
+#angellGate svg{display:block;margin:0 auto 8px;}
+#angellGate .nm{font-family:'Archivo',sans-serif;font-weight:900;letter-spacing:.28em;font-size:15px;color:var(--teal-deep);margin-bottom:22px;}
+#angellGate h2{font-family:'Archivo',sans-serif;font-weight:800;font-size:24px;color:var(--teal-deep);margin-bottom:8px;}
+#angellGate p{font-size:15px;color:#6A6256;margin-bottom:22px;}
+#angellGate input{width:100%;font-family:'JetBrains Mono',monospace;font-size:18px;letter-spacing:.08em;text-align:center;padding:15px 16px;border:2px solid var(--line);border-radius:11px;outline:none;text-transform:uppercase;color:var(--ink);}
+#angellGate input:focus{border-color:var(--gold);}
+#angellGate button{width:100%;margin-top:14px;font-family:'Archivo',sans-serif;font-weight:800;font-size:16px;letter-spacing:.04em;color:var(--cream);background:var(--teal);border:none;border-radius:11px;padding:15px;cursor:pointer;}
+#angellGate button:hover{background:var(--teal-deep);}
+#angellGate .err{color:var(--red);font-size:14px;font-family:'Archivo',sans-serif;font-weight:700;margin-top:14px;min-height:18px;}
+#angellGate .hint{font-size:12.5px;color:#9A9286;margin-top:18px;}
+body.locked{overflow:hidden;}
+body.locked #angellMain{display:none;}
+
+</style>
+</head>
+<body class="locked">
+
+<div id="angellGate">
+  <div class="box">
+    <svg width="74" height="74" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="100" cy="100" r="92" stroke="#C4974A" stroke-width="6" fill="none"/>
+      <circle cx="100" cy="100" r="71" stroke="#C4974A" stroke-width="2" opacity="0.4" fill="none"/>
+      <polygon points="100,8 113,84 192,100 113,116 100,192 87,116 8,100 87,84" fill="#1A1A1A"/>
+      <polygon points="100,84 116,100 100,116 84,100" fill="#C4974A"/>
+    </svg>
+    <div class="nm">ANGELL</div>
+    <h2>Enter Your Access Code</h2>
+    <p>Your code was emailed to you after purchase. Enter it below to unlock The Airbnb Arbitrage Blueprint.</p>
+    <input id="gateCode" type="text" placeholder="ACCESS CODE" autocomplete="off" spellcheck="false">
+    <button onclick="checkCode()">Unlock the Blueprint</button>
+    <div class="err" id="gateErr"></div>
+    <div class="hint">Trouble getting in? Reply to your confirmation email for help.</div>
+  </div>
+</div>
+
+<div id="angellMain">
+
+<div class="hero">
+  <div class="hero-inner">
+    <svg class="brand-logo" width="118" height="142" viewBox="0 0 200 240" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Angell logo">
+      <circle cx="100" cy="100" r="92" stroke="#C4974A" stroke-width="6"/>
+      <circle cx="100" cy="100" r="71" stroke="#C4974A" stroke-width="2" opacity="0.4"/>
+      <polygon points="100,8 113,84 192,100 113,116 100,192 87,116 8,100 87,84" fill="#FAF7F2"/>
+      <polygon points="100,84 116,100 100,116 84,100" fill="#C4974A"/>
+      <text x="100" y="228" font-family="Georgia, 'Times New Roman', serif" font-size="22" font-weight="700" letter-spacing="10" fill="#FAF7F2" text-anchor="middle">ANGELL</text>
+    </svg>
+    <div class="eyebrow">Business Course</div>
+    <h1>The Airbnb Arbitrage <em>Blueprint</em></h1>
+    <p class="sub">Control short-term rentals without buying a single property. Find the units, win the landlord over, get it furnished without draining your pocket, and build the team that runs it while you scale.</p>
+    <div class="hero-stats">
+      <div class="hstat"><div class="n">$0</div><div class="l">Properties Owned</div></div>
+      <div class="hstat"><div class="n">7</div><div class="l">Ways to Find Units</div></div>
+      <div class="hstat"><div class="n">5</div><div class="l">Furnish-Free Plays</div></div>
+      <div class="hstat"><div class="n">1</div><div class="l">System That Scales</div></div>
+    </div>
+  </div>
+</div>
+
+<nav class="nav" aria-label="Course sections">
+  <div class="nav-inner">
+    <a href="#model">The Model</a>
+    <a href="#market">Market Research</a>
+    <a href="#find">Finding Units</a>
+    <a href="#pitch">The Landlord Pitch</a>
+    <a href="#furnish">Furnishing</a>
+    <a href="#legal">Legal &amp; Insurance</a>
+    <a href="#tech">Tech Stack</a>
+    <a href="#team">Your Team</a>
+    <a href="#launch">Launch</a>
+    <a href="#scale">Scaling</a>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-top">
+      <span class="progress-label">Your Progress</span>
+      <span class="progress-pct" id="pPct">0% complete</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="pFill"></div></div>
+  </div>
+</nav>
+
+<!-- ============ SECTION 1: THE MODEL ============ -->
+<section id="model"><div class="wrap">
+  <div class="step-tag">Step 01</div>
+  <h2>The Arbitrage Model — How You Profit From Property You Don't Own</h2>
+  <p>Rental arbitrage is simple: you sign a normal long-term lease on a property <b>with the landlord's written permission to sublet</b>, furnish it, and list it on Airbnb and VRBO at nightly rates. The spread between what guests pay you and what you pay the landlord is your profit.</p>
+
+  <div class="math">
+    <div class="row"><span>Nightly rate ($135) &times; 20 booked nights</span><span class="pos">+ $2,700</span></div>
+    <div class="row"><span>Cleaning fees collected (6 turnovers &times; $90)</span><span class="pos">+ $540</span></div>
+    <div class="row"><span>Rent to landlord</span><span class="neg">&minus; $1,200</span></div>
+    <div class="row"><span>Utilities + Wi-Fi</span><span class="neg">&minus; $260</span></div>
+    <div class="row"><span>Cleaning crew payout (6 &times; $90)</span><span class="neg">&minus; $540</span></div>
+    <div class="row"><span>Supplies, software, insurance</span><span class="neg">&minus; $190</span></div>
+    <div class="row"><span>Monthly profit — one unit</span><span>$1,050</span></div>
+  </div>
+
+  <p>That example is a modest mid-market unit at 65% occupancy. Run five units like that and you've replaced a full-time income — with no mortgage, no down payment, and no property tax bill.</p>
+
+  <div class="note"><b>The golden rule:</b> Arbitrage only works when the landlord knows and approves in writing. Sneaking Airbnb guests into a lease that forbids subletting gets you evicted, sued, and banned from the platform. The pitch in Step 4 exists so you never have to hide anything.</div>
+
+  <h3>Startup costs — what you actually need</h3>
+  <table>
+    <tr><th>Expense</th><th>Typical Range</th><th>Can You Reduce It?</th></tr>
+    <tr><td>First month + security deposit</td><td>$2,000–$3,600</td><td>Negotiate deposit split over 2–3 months</td></tr>
+    <tr><td>Furnishing (1BR)</td><td>$3,500–$8,000</td><td class="good">YES — Step 5 shows you 5 ways to cut this to near zero</td></tr>
+    <tr><td>Photography</td><td>$150–$350</td><td>Worth every penny — never skip</td></tr>
+    <tr><td>STR insurance (monthly)</td><td>$60–$130</td><td>Required, non-negotiable</td></tr>
+    <tr><td>Permits/registration</td><td>$0–$500</td><td>Varies by city — check Step 2</td></tr>
+  </table>
+<button class="done-btn" data-step="model" onclick="toggleStep(this)">Mark Step Complete</button></div></section>
+
+<!-- ============ SECTION 2: MARKET RESEARCH ============ -->
+<section id="market"><div class="wrap">
+  <div class="step-tag">Step 02</div>
+  <h2>Market Research — Pick Winners Before You Sign Anything</h2>
+  <p>Most arbitrage failures happen here, before a single guest checks in. People sign leases in markets where the nightly rates can't cover rent. Twenty minutes of research prevents a 12-month mistake.</p>
+
+  <h3>The 2X Rule</h3>
+  <p>A unit qualifies only if projected monthly Airbnb revenue is at least <b>2&times; the monthly rent</b>. $1,200 rent needs $2,400+ in projected revenue. Below that, occupancy dips and slow seasons will eat you alive.</p>
+
+  <h3>Research tools</h3>
+  <div class="linkrow">
+    <a class="lbtn" href="https://www.airdna.co" target="_blank">AirDNA — Revenue Data <span class="arrow">→</span></a>
+    <a class="lbtn" href="https://www.rabbu.com/airbnb-calculator" target="_blank">Rabbu — Free Calculator <span class="arrow">→</span></a>
+    <a class="lbtn" href="https://www.mashvisor.com" target="_blank">Mashvisor <span class="arrow">→</span></a>
+    <a class="lbtn alt" href="https://www.airbnb.com" target="_blank">Airbnb — Manual Comps <span class="arrow">→</span></a>
+  </div>
+
+  <div class="card teal">
+    <h4>The Free Manual Method (works without paying for anything)</h4>
+    <p>Open Airbnb, search your target neighborhood with dates 3–4 weeks out. Filter to the bedroom count you're considering. Now study the top 10 listings: nightly rates, how many dates are blocked on their calendars (blocked = booked), review counts, and amenities. If the top listings are 70%+ booked at $120+/night and rent runs $1,100, you've found a market.</p>
+  </div>
+
+  <h3>Check the law BEFORE you fall in love with a unit</h3>
+  <p>Every city treats short-term rentals differently. Some require a simple registration, some cap the number of permits, some ban non-owner-occupied STRs entirely. Search "<i>[your city] short-term rental ordinance</i>" and call the city clerk's office — they answer these questions every day.</p>
+  <div class="linkrow">
+    <a class="lbtn alt" href="https://www.airbnb.com/help/article/1376" target="_blank">Airbnb — Responsible Hosting Rules by Area <span class="arrow">→</span></a>
+  </div>
+
+  <div class="warn"><b>Red flags that kill a market:</b> permit caps already maxed out, HOA-heavy neighborhoods, college towns with 9-month demand, and any city actively suing Airbnb hosts. One phone call to the clerk saves you thousands.</div>
+
+  <h3>What makes a unit guest-magnetic</h3>
+  <ul class="plain">
+    <li><b>Location score:</b> within 15 minutes of a hospital, university, stadium, downtown, or major employer. Hospitals are gold — traveling nurses book 30+ day stays.</li>
+    <li><b>1BR and 2BR units</b> hit the sweet spot of rent-to-rate ratio. Studios cap your rate; 4BRs cap your guest pool.</li>
+    <li><b>In-unit washer/dryer, dedicated parking, ground floor or elevator</b> — the three amenities that move bookings most in mid-size markets.</li>
+    <li><b>Newer or recently renovated</b> — photos sell the listing, and dated interiors can't be photographed around.</li>
+  </ul>
+<button class="done-btn" data-step="market" onclick="toggleStep(this)">Mark Step Complete</button></div></section>
+
+<!-- ============ SECTION 3: FINDING UNITS ============ -->
+<section id="find"><div class="wrap">
+  <div class="step-tag">Step 03</div>
+  <h2>Finding Units — The Zillow Landlord Method + 6 More Pipelines</h2>
+  <p>Your deal flow is everything. Here are seven pipelines, starting with the highest-converting one: going direct to landlords on Zillow.</p>
+
+  <h3>Pipeline #1 — The Zillow Direct-to-Landlord Method</h3>
+  <div class="card gold">
+    <h4>Step-by-step</h4>
+    <ul class="plain">
+      <li><b>1.</b> Go to Zillow Rentals and search your target ZIP codes.</li>
+      <li><b>2.</b> Filter: your price range, 1–2 BR, and sort by "Newest." Fresh listings mean motivated landlords.</li>
+      <li><b>3.</b> Identify private landlords vs. big property managers. Listings with phone numbers, slightly amateur photos, or "listed by property owner" are your targets. Small landlords say yes far more often than corporate leasing offices.</li>
+      <li><b>4.</b> Look for listings sitting 30+ days — that landlord is losing money every day and is far more open to a creative tenant who guarantees rent.</li>
+      <li><b>5.</b> Contact through the listing, but always push to get them on the phone. The pitch (Step 4) converts on calls, not in Zillow's message box.</li>
+      <li><b>6.</b> Track every contact in a simple spreadsheet: address, rent, landlord name, date contacted, response, follow-up date. Follow up at day 3 and day 7. Most yeses come on the follow-up.</li>
+    </ul>
+  </div>
+  <div class="linkrow">
+    <a class="lbtn" href="https://www.zillow.com/homes/for_rent/" target="_blank">Zillow Rentals <span class="arrow">→</span></a>
+    <a class="lbtn" href="https://www.apartments.com" target="_blank">Apartments.com <span class="arrow">→</span></a>
+    <a class="lbtn" href="https://hotpads.com" target="_blank">HotPads <span class="arrow">→</span></a>
+    <a class="lbtn" href="https://www.craigslist.org" target="_blank">Craigslist — Apts/Housing <span class="arrow">→</span></a>
+  </div>
+
+  <h3>Pipelines #2–#7</h3>
+  <table>
+    <tr><th>Pipeline</th><th>How It Works</th><th>Why It Converts</th></tr>
+    <tr><td><b>Facebook Marketplace + local rental groups</b></td><td>Search "for rent [city]," join landlord/rental groups, post that you're seeking a 12-month lease with landlord-approved subletting</td><td>You're talking directly to small landlords with zero middleman</td></tr>
+    <tr><td><b>Craigslist "by owner" filter</b></td><td>Filter rentals to owner-listed only; older landlords still live here</td><td>Least competition from other arbitrage operators</td></tr>
+    <tr><td><b>Realtor referrals</b></td><td>Tell 3–4 local agents you'll lease units that sit on the market; offer to be their problem-solver for stale rental listings</td><td>Agents bring YOU deals once they know what you want</td></tr>
+    <tr><td><b>Property management companies</b></td><td>Ask if any owners allow corporate/medium-term subletting — some PMs manage dozens of investor-owned units</td><td>One yes can unlock 5–10 units at once</td></tr>
+    <tr><td><b>Driving for "For Rent" signs</b></td><td>Yard signs = self-managing landlords. Call the number, run the pitch</td><td>These landlords aren't on Zillow — nobody else is calling them</td></tr>
+    <tr><td><b>New apartment developments in lease-up</b></td><td>Brand-new buildings need occupancy fast to hit lender targets; many offer move-in specials and some openly allow STR programs</td><td>Concessions (1–2 months free) massively pad your margin</td></tr>
+    <tr><td><b>Landlord-tenant matching for STR</b></td><td>Platforms built for exactly this arrangement</td><td>Landlords here have already said yes to the model</td></tr>
+  </table>
+  <div class="linkrow">
+    <a class="lbtn alt" href="https://www.furnishedfinder.com" target="_blank">Furnished Finder <span class="arrow">→</span></a>
+    <a class="lbtn alt" href="https://www.facebook.com/marketplace" target="_blank">Facebook Marketplace <span class="arrow">→</span></a>
+  </div>
+
+  <div class="note"><b>Volume math:</b> This is a numbers game. Expect roughly 10 contacts → 3 conversations → 1 serious negotiation. Twenty landlord contacts a week gets most people their first signed unit inside 30–45 days.</div>
+<button class="done-btn" data-step="find" onclick="toggleStep(this)">Mark Step Complete</button></div></section>
+
+<!-- ============ SECTION 4: THE PITCH ============ -->
+<section id="pitch"><div class="wrap">
+  <div class="step-tag">Step 04</div>
+  <h2>The Landlord Pitch — Word-for-Word Scripts That Get the Yes</h2>
+  <p>Landlords don't care about your business. They care about three things: <b>guaranteed rent, a protected property, and zero headaches.</b> Every script below sells those three things — never the word "Airbnb" in the first sentence.</p>
+
+  <div class="script">
+    <span class="s-label">Script — First Phone Call</span>
+    <button class="copy-btn" onclick="copyScript(this)">Copy</button>
+    <p>"Hi, my name's [Name] — I'm calling about your unit on [Street]. I run a small hospitality company here in [city], and I'm looking for a long-term lease, twelve months minimum. Here's what makes me different from a normal tenant: I'd be using the unit to host vetted, short-stay guests — mostly traveling professionals — so the rent doesn't depend on my paycheck, it's backed by my business. You get rent on the first, every month, guaranteed, whether the unit is booked or not. I also carry a commercial insurance policy on top of your coverage and the place gets professionally cleaned multiple times a week. Could I walk the unit this week and show you how I protect the property?"</p>
+  </div>
+
+  <div class="script">
+    <span class="s-label">Script — Zillow / Email Message</span>
+    <button class="copy-btn" onclick="copyScript(this)">Copy</button>
+    <p>"Hi [Name], I'm interested in your listing at [address]. Quick context so I'm not wasting your time: I operate furnished short-stay housing for traveling professionals (nurses, contractors, relocating families). I'm looking for a 12–24 month lease, I pay rent on the 1st regardless of occupancy, I carry $1M commercial liability insurance beyond your landlord policy, and the unit gets professional cleaning 2–3x weekly — so it's maintained better than a typical rental. Happy to provide references, proof of insurance, and walk you through exactly how I screen guests. Are you open to a 10-minute call this week?"</p>
+  </div>
+
+  <div class="script">
+    <span class="s-label">Script — Text Follow-Up (Day 3)</span>
+    <button class="copy-btn" onclick="copyScript(this)">Copy</button>
+    <p>"Hi [Name], this is [Name] — reached out about [address] earlier this week. I know 'short-stay housing' can sound unfamiliar, so here's the short version: you get guaranteed rent on the 1st, a unit that's professionally cleaned more often than any normal rental, and an extra $1M insurance policy protecting your property. Worst case for you is a tenant who pays on time and keeps the place spotless. Still happy to chat — when's good?"</p>
+  </div>
+
+  <h3>Objection handling — the five you'll hear every time</h3>
+  <table>
+    <tr><th>Objection</th><th>Your Response</th></tr>
+    <tr><td>"I don't want partiers trashing my place."</td><td>"Neither do I — damage comes out of my pocket before yours. I require government ID verification, no local same-night bookings, noise monitors in the unit, and a strict no-party policy with security deposits. My business dies if your property gets damaged, so I protect it harder than a normal tenant would."</td></tr>
+    <tr><td>"My insurance won't allow it."</td><td>"That's exactly why I carry my own commercial short-term rental policy — $1M liability that sits on top of your landlord coverage. I'll send you the certificate of insurance before we sign anything, and I can add you as additional insured."</td></tr>
+    <tr><td>"Why don't you just do this yourself with your own property?"</td><td>"I'd rather put capital into furnishing and operations than a down payment. You keep the asset and the appreciation — I just operate inside it and pay you premium, reliable rent for the privilege."</td></tr>
+    <tr><td>"What if the city doesn't allow it?"</td><td>"I've already checked [city]'s ordinance — here's the registration requirement and I handle that filing and cost. It goes in the lease that I'm responsible for full compliance."</td></tr>
+    <tr><td>"I can just rent it normally."</td><td>"You can — and you might get a great tenant, or you might get late payments, an eviction, and a unit you see once a year. With me you get rent on the 1st backed by a business, eyes on the property multiple times a week, and a tenant whose entire livelihood depends on keeping you happy. I'm also open to a 12-month lease at slightly above asking if that makes this a no-brainer."</td></tr>
+  </table>
+
+  <h3>Sweeteners that close stubborn landlords</h3>
+  <ul class="plain">
+    <li><b>Offer $50–$150/month above asking rent.</b> Sounds backwards, but if the unit clears the 2X rule, paying a small premium to lock in a yes is the cheapest customer acquisition you'll ever do.</li>
+    <li><b>Longer lease term</b> — offer 18–24 months. Landlords value vacancy elimination above almost everything.</li>
+    <li><b>Larger security deposit</b> — 1.5–2x deposit signals you're not worried about damage, which tells them they shouldn't be either.</li>
+    <li><b>Quarterly walk-through rights</b> — invite them to inspect anytime with notice. Transparency kills fear.</li>
+    <li><b>Revenue share option</b> — for sophisticated landlords: base rent slightly below asking + 10–15% of revenue above a threshold. Now they're rooting for your bookings.</li>
+  </ul>
+
+  <div class="note"><b>Always close with paper:</b> Once they're verbally in, send a one-page summary — lease term, rent, your insurance, cleaning schedule, guest screening rules, and the sublease permission clause. Professional paper turns a "maybe" into a signature.</div>
+<button class="done-btn" data-step="pitch" onclick="toggleStep(this)">Mark Step Complete</button></div></section>
+
+<!-- ============ SECTION 5: FURNISHING ============ -->
+<section id="furnish"><div class="wrap">
+  <div class="step-tag">Step 05</div>
+  <h2>Furnishing Without Draining Your Pocket — 5 Plays</h2>
+  <p>Furnishing is the biggest startup cost in arbitrage — $3,500–$8,000 for a one-bedroom done right. Here's how to push that cost onto the property owner, a finance company, or the calendar instead of your bank account.</p>
+
+  <div class="card gold">
+    <h4>Play #1 — Get the Owner to Furnish It (the ask most people never make)</h4>
+    <p>Frame it as an investment in <i>their</i> asset, not a favor to you: <b>"If you furnish the unit, I'll sign at $150/month above asking on a 24-month lease — that's $3,600 extra to you, the furniture is yours and stays with your property forever, and your unit becomes a furnished rental worth 15–25% more rent to any future tenant after me."</b> You can also offer a furnishing allowance structure: owner spends up to $5,000 on furniture (you provide the exact shopping list), and you repay it through a $200/month rent bump. They earn interest, keep the furniture, and you keep your cash.</p>
+  </div>
+
+  <div class="card gold">
+    <h4>Play #2 — Target Already-Furnished Units</h4>
+    <p>Filter Zillow and Furnished Finder for "furnished" listings. Estate situations, relocating owners, and failed-Airbnb landlords (huge opportunity — they already have the furniture AND understand the model) list fully furnished units constantly. A failed STR host's unit is the perfect arbitrage target: furnished, permitted, and owned by someone who already believes in short-term rental income but didn't want to operate it.</p>
+  </div>
+
+  <div class="card gold">
+    <h4>Play #3 — Furniture Rental / Rent-to-Own</h4>
+    <p>Furniture rental companies will furnish an entire 1BR for roughly $200–$400/month with no upfront capital — and it's a deductible operating expense. Use it to launch, then replace pieces with owned furniture as revenue comes in.</p>
+    <div class="linkrow">
+      <a class="lbtn alt" href="https://www.cort.com" target="_blank">CORT Furniture Rental <span class="arrow">→</span></a>
+      <a class="lbtn alt" href="https://www.brookfurniture.com" target="_blank">Brook Furniture Rental <span class="arrow">→</span></a>
+      <a class="lbtn alt" href="https://www.fernish.com" target="_blank">Fernish <span class="arrow">→</span></a>
+    </div>
+  </div>
+
+  <div class="card gold">
+    <h4>Play #4 — 0% Financing + Secondhand Hybrid</h4>
+    <p>Big-ticket new items (mattresses, sofa) on 0% promotional financing through store cards or buy-now-pay-later; everything else secondhand. Facebook Marketplace, estate sales, and hotel liquidators are goldmines — hotel liquidation outlets sell commercial-grade furniture built for exactly your use case at 50–70% off retail.</p>
+    <div class="linkrow">
+      <a class="lbtn alt" href="https://www.hotelsurplus.com" target="_blank">Hotel Surplus Outlet <span class="arrow">→</span></a>
+      <a class="lbtn alt" href="https://www.estatesales.net" target="_blank">EstateSales.net <span class="arrow">→</span></a>
+    </div>
+  </div>
+
+  <div class="card gold">
+    <h4>Play #5 — The Mid-Term First, Upgrade Later Strategy</h4>
+    <p>Launch as a 30+ day furnished rental for traveling nurses on Furnished Finder with basic furnishing (~$2,500), bank 2–3 months of profit, then upgrade the décor and switch to nightly Airbnb rates. You start earning with the cheap setup and let the unit pay for its own glow-up.</p>
+  </div>
+
+  <h3>The 1BR furnishing checklist</h3>
+  <div class="check">
+    <label><input type="checkbox" data-ck="ck1"><span>Queen/king bed + commercial-grade mattress + mattress protector</span></label>
+    <label><input type="checkbox" data-ck="ck2"><span>2 full bedding sets per bed (turnovers need backups)</span></label>
+    <label><input type="checkbox" data-ck="ck3"><span>Sofa (sleeper sofa = +2 guest capacity = higher rate)</span></label>
+    <label><input type="checkbox" data-ck="ck4"><span>Smart TV + reliable Wi-Fi (post the speed in your listing)</span></label>
+    <label><input type="checkbox" data-ck="ck5"><span>Dining table + chairs, full kitchen kit (pots, pans, utensils, coffee maker)</span></label>
+    <label><input type="checkbox" data-ck="ck6"><span>Workspace: desk + chair (unlocks the remote-worker filter on Airbnb)</span></label>
+    <label><input type="checkbox" data-ck="ck7"><span>Blackout curtains, lamps, mirrors, wall art</span></label>
+    <label><input type="checkbox" data-ck="ck8"><span>2 towel sets per guest, hair dryer, iron</span></label>
+    <label><input type="checkbox" data-ck="ck9"><span>Smoke + CO detectors, fire extinguisher, first aid kit (Airbnb safety requirements)</span></label>
+    <label><input type="checkbox" data-ck="ck10"><span>Locked owner's closet for your supplies</span></label>
+  </div>
+<button class="done-btn" data-step="furnish" onclick="toggleStep(this)">Mark Step Complete</button></div></section>
+
+<!-- ============ SECTION 6: LEGAL ============ -->
+<section id="legal"><div class="wrap">
+  <div class="step-tag">Step 06</div>
+  <h2>Legal Protection &amp; Insurance — Build the Moat</h2>
+  <p>This section is what separates a real operator from someone playing landlord roulette. Four layers of protection, in order:</p>
+
+  <h3>Layer 1 — The LLC</h3>
+  <p>Form an LLC before you sign your first lease, and sign the lease in the LLC's name where the landlord allows it. It separates your personal assets from the business, looks more professional in the pitch, and sets up clean bookkeeping. File directly with your Secretary of State (usually $40–$150) — you don't need an expensive service.</p>
+  <div class="linkrow">
+    <a class="lbtn alt" href="https://www.irs.gov/businesses/small-businesses-self-employed/apply-for-an-employer-identification-number-ein-online" target="_blank">IRS — Free EIN <span class="arrow">→</span></a>
+    <a class="lbtn alt" href="https://www.sos.wv.gov" target="_blank">WV Secretary of State <span class="arrow">→</span></a>
+    <a class="lbtn alt" href="https://sos.ky.gov" target="_blank">KY Secretary of State <span class="arrow">→</span></a>
+  </div>
+
+  <h3>Layer 2 — The Sublease Addendum (the document that makes this legal)</h3>
+  <p>Your lease must contain explicit written permission. A one-paragraph addendum signed by both parties does it. The clause should state:</p>
+  <div class="card teal">
+    <h4>What the addendum must cover</h4>
+    <ul class="plain">
+      <li>Tenant (your LLC) is expressly authorized to operate the premises as furnished short-term lodging and sublet to guests</li>
+      <li>Tenant maintains commercial liability insurance of at least $1M naming landlord as additional insured</li>
+      <li>Tenant is responsible for all STR permits, registrations, and local tax compliance</li>
+      <li>Tenant responsible for guest-caused damage beyond normal wear</li>
+      <li>Landlord inspection rights with 24–48 hr notice</li>
+    </ul>
+    <p><b>Have a local real estate attorney review your template once</b> ($200–$400) — then reuse it on every deal. That's the cheapest legal protection you'll ever buy.</p>
+  </div>
+
+  <h3>Layer 3 — Real STR Insurance (Airbnb's AirCover is NOT insurance)</h3>
+  <p>AirCover is a damage reimbursement program with exclusions, not a liability policy. You need actual commercial short-term rental insurance:</p>
+  <div class="linkrow">
+    <a class="lbtn" href="https://www.proper.insure" target="_blank">Proper Insurance <span class="arrow">→</span></a>
+    <a class="lbtn" href="https://www.safely.com" target="_blank">Safely <span class="arrow">→</span></a>
+    <a class="lbtn" href="https://www.steadily.com" target="_blank">Steadily <span class="arrow">→</span></a>
+  </div>
+
+  <h3>Layer 4 — Permits &amp; Taxes</h3>
+  <ul class="plain">
+    <li><b>City STR registration/permit</b> — whatever your ordinance requires; the cost goes in your startup budget and the responsibility goes in your lease addendum.</li>
+    <li><b>Lodging/occupancy tax</b> — Airbnb collects and remits in many jurisdictions, but verify what YOUR city and state require. Search "[state] transient occupancy tax."</li>
+    <li><b>Track everything</b> — every furnishing receipt, mile driven, and supply run is deductible. Get a bookkeeper or at minimum a dedicated business bank account from day one.</li>
+  </ul>
+<button class="done-btn" data-step="legal" onclick="toggleStep(this)">Mark Step Complete</button></div></section>
+
+<!-- ============ SECTION 7: TECH STACK ============ -->
+<section id="tech"><div class="wrap">
+  <div class="step-tag">Step 07</div>
+  <h2>The Tech Stack — Automate Before You Operate</h2>
+  <p>Set this up before your first booking and one unit takes about 2 hours a week to run. Skip it and you'll be answering "what's the Wi-Fi password" at 2 AM forever.</p>
+
+  <table>
+    <tr><th>Job</th><th>Tools</th><th>Roughly</th></tr>
+    <tr><td><b>Smart lock / keyless entry</b><br>Unique code per guest, auto-expires at checkout</td><td>Schlage Encode, Yale Assure, August</td><td>$150–$300 one-time</td></tr>
+    <tr><td><b>Channel manager + auto-messaging</b><br>Syncs Airbnb + VRBO calendars, sends check-in instructions automatically</td><td>Hospitable, Guesty for Hosts, Hostaway</td><td>$30–$60/mo</td></tr>
+    <tr><td><b>Dynamic pricing</b><br>Adjusts nightly rates to demand, events, seasons — typically adds 10–30% revenue</td><td>PriceLabs, Wheelhouse, Beyond</td><td>$20–$40/mo or % of revenue</td></tr>
+    <tr><td><b>Noise monitoring</b><br>Decibel alerts without recording audio — your party insurance and your landlord-pitch proof point</td><td>Minut, NoiseAware</td><td>$10–$15/mo per unit</td></tr>
+    <tr><td><b>Cleaning coordination</b><br>Auto-schedules your cleaner on every checkout, with photo checklists</td><td>Turno, ResortCleaning</td><td>Free–$10/mo per unit</td></tr>
+    <tr><td><b>Guest screening</b><br>ID verification + risk screening beyond Airbnb's</td><td>Autohost, Superhog (Truvi)</td><td>$2–$5 per booking</td></tr>
+  </table>
+  <div class="linkrow">
+    <a class="lbtn" href="https://hospitable.com" target="_blank">Hospitable <span class="arrow">→</span></a>
+    <a class="lbtn" href="https://www.pricelabs.co" target="_blank">PriceLabs <span class="arrow">→</span></a>
+    <a class="lbtn" href="https://turno.com" target="_blank">Turno <span class="arrow">→</span></a>
+    <a class="lbtn" href="https://www.minut.com" target="_blank">Minut <span class="arrow">→</span></a>
+  </div>
+
+  <div class="note"><b>List everywhere:</b> Airbnb first, then VRBO, then Furnished Finder for 30+ day traveling-professional stays. Your channel manager keeps the calendars synced so you never double-book. Mid-term stays through Furnished Finder are the secret stabilizer — one 3-month nurse booking floats your slow season.</div>
+<button class="done-btn" data-step="tech" onclick="toggleStep(this)">Mark Step Complete</button></div></section>
+
+<!-- ============ SECTION 8: TEAM ============ -->
+<section id="team"><div class="wrap">
+  <div class="step-tag">Step 08</div>
+  <h2>Your Team — The People Who Run It While You Scale</h2>
+  <p>You are building a hospitality company, not a second job. Recruit these before launch:</p>
+
+  <table>
+    <tr><th>Role</th><th>Where to Find Them</th><th>What to Pay / Expect</th></tr>
+    <tr><td><b>Cleaning crew (2 — primary + backup)</b><br>Your single most important hire</td><td>Turno marketplace, local FB groups, ask other hosts in your market, Yelp/Google "vacation rental cleaning"</td><td>$80–$150 per turnover (guest pays via cleaning fee). Interview with a paid test clean; require photo checklists</td></tr>
+    <tr><td><b>Handyman</b></td><td>Thumbtack, Angi, FB recommendations — save 2–3 numbers</td><td>$50–$100/hr; respond-same-day matters more than price</td></tr>
+    <tr><td><b>STR photographer</b></td><td>Search "[city] real estate photographer"; Airbnb-experienced preferred</td><td>$150–$350 flat. Listings with pro photos book measurably more — this is the best ROI dollar in the whole business</td></tr>
+    <tr><td><b>Lawn/snow (if house)</b></td><td>Local crews, FB Marketplace services</td><td>$30–$60 per visit, seasonal contract</td></tr>
+    <tr><td><b>Bookkeeper / CPA</b></td><td>Local CPA familiar with STR (ask if they know Schedule C vs E treatment for arbitrage)</td><td>$150–$400/mo bookkeeping; worth it from unit #2</td></tr>
+    <tr><td><b>Co-host or PM company (later)</b><br>Full-service management once you're 5+ units or want out of operations</td><td>Co-host marketplaces, local STR property managers, Awning, Evolve</td><td>10–25% of revenue — only makes sense once margins support it</td></tr>
+  </table>
+  <div class="linkrow">
+    <a class="lbtn alt" href="https://www.thumbtack.com" target="_blank">Thumbtack <span class="arrow">→</span></a>
+    <a class="lbtn alt" href="https://www.angi.com" target="_blank">Angi <span class="arrow">→</span></a>
+    <a class="lbtn alt" href="https://turno.com/cleaners/" target="_blank">Turno Cleaner Marketplace <span class="arrow">→</span></a>
+  </div>
+
+  <div class="card teal">
+    <h4>The cleaner system that protects your ratings</h4>
+    <p>Your cleaner is your eyes on the property. Require: (1) photo checklist after every turnover in Turno, (2) immediate damage reports with photos — that's how you claim against guest deposits in time, (3) restocking duties built into the rate (toilet paper, coffee, soap), and (4) a backup cleaner who's done the unit at least once. One missed clean with a same-day check-in is a 1-star review you can't delete.</p>
+  </div>
+<button class="done-btn" data-step="team" onclick="toggleStep(this)">Mark Step Complete</button></div></section>
+
+<!-- ============ SECTION 9: LAUNCH ============ -->
+<section id="launch"><div class="wrap">
+  <div class="step-tag">Step 09</div>
+  <h2>Launch — From Signed Lease to First Booking in 14 Days</h2>
+  <div class="check">
+    <label><input type="checkbox" data-ck="ck11"><span><b>Days 1–2:</b> Utilities + fastest available Wi-Fi in business name; permits/registration filed; insurance bound, COI sent to landlord</span></label>
+    <label><input type="checkbox" data-ck="ck12"><span><b>Days 3–7:</b> Furnish (your Play from Step 5), deep clean, install smart lock + noise monitor, stock supplies</span></label>
+    <label><input type="checkbox" data-ck="ck13"><span><b>Day 8:</b> Professional photo shoot — stage with throw pillows, lamps on, blinds open</span></label>
+    <label><input type="checkbox" data-ck="ck14"><span><b>Days 9–10:</b> Build listings on Airbnb + VRBO + Furnished Finder. Title formula: [Hook] + [Location benefit] + [Top amenity] — "Cozy King Bed Retreat | 5 Min to Hospital | Fast Wi-Fi + Parking"</span></label>
+    <label><input type="checkbox" data-ck="ck15"><span><b>Day 10:</b> Connect channel manager, auto-messages, dynamic pricing. Set opening rates 15–20% below market to win your first 5 reviews fast</span></label>
+    <label><input type="checkbox" data-ck="ck16"><span><b>Days 11–14:</b> Onboard cleaner with a walkthrough + test turnover; write your digital guidebook (Wi-Fi, parking, house rules, local food spots); send landlord photos of the finished unit — that goodwill becomes your reference for unit #2</span></label>
+    <label><input type="checkbox" data-ck="ck17"><span><b>After 5 reviews:</b> Raise rates to market, then let dynamic pricing take over</span></label>
+  </div>
+<button class="done-btn" data-step="launch" onclick="toggleStep(this)">Mark Step Complete</button></div></section>
+
+<!-- ============ SECTION 10: SCALE ============ -->
+<section id="scale"><div class="wrap">
+  <div class="step-tag">Step 10</div>
+  <h2>Scaling — From One Unit to a Portfolio</h2>
+  <ul class="plain">
+    <li><b>Stabilize before you multiply.</b> Unit #1 should run 60+ days at target occupancy with systems doing the work before you sign unit #2. Your profit from unit #1 funds the furnishing of unit #2 — that's the flywheel.</li>
+    <li><b>Go back to your landlord first.</b> The easiest second unit is from the landlord you already pay on the 1st. "Do you have anything else coming vacant — or do you know other owners?" Small landlords all know each other.</li>
+    <li><b>Standardize everything.</b> Same furniture package, same supply list, same listing template, same cleaner checklist. Unit #4 should take half the setup time of unit #1.</li>
+    <li><b>Watch the 3 numbers weekly:</b> occupancy rate, average nightly rate, and revenue per unit vs. its 2X threshold. A unit that slips under 1.5X for two straight months gets repriced, repositioned (mid-term nurse housing), or non-renewed.</li>
+    <li><b>The exit ramps:</b> arbitrage profits become down payments. Plenty of operators run 5–10 arbitrage units, then start buying — you already know exactly which properties cash flow because you've been operating them.</li>
+  </ul>
+
+  <div class="note"><b>The whole model in one sentence:</b> You're not in the property business — you're in the hospitality business, renting the real estate wholesale and selling it retail by the night, with the landlord's blessing and other people doing the turnovers.</div>
+<button class="done-btn" data-step="scale" onclick="toggleStep(this)">Mark Step Complete</button></div></section>
+
+<div class="foot">
+  <div class="logo"><svg class="brand-logo" width="86" height="103" viewBox="0 0 200 240" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Angell logo">
+      <circle cx="100" cy="100" r="92" stroke="#C4974A" stroke-width="6"/>
+      <circle cx="100" cy="100" r="71" stroke="#C4974A" stroke-width="2" opacity="0.4"/>
+      <polygon points="100,8 113,84 192,100 113,116 100,192 87,116 8,100 87,84" fill="#FAF7F2"/>
+      <polygon points="100,84 116,100 100,116 84,100" fill="#C4974A"/>
+      <text x="100" y="228" font-family="Georgia, 'Times New Roman', serif" font-size="22" font-weight="700" letter-spacing="10" fill="#FAF7F2" text-anchor="middle">ANGELL</text>
+    </svg></div>
+  <div>The Airbnb Arbitrage Blueprint &middot; For educational purposes — verify local ordinances and consult licensed professionals for legal, tax, and insurance decisions.</div>
+</div>
+
+<script>
+// Storage with safe fallback (works as a normal browser file; falls back to in-memory elsewhere)
+var memStore = {};
+function sGet(k){ try { return localStorage.getItem(k); } catch(e){ return memStore[k] || null; } }
+function sSet(k,v){ try { localStorage.setItem(k,v); } catch(e){ memStore[k]=v; } }
+
+var STEPS = ['model','market','find','pitch','furnish','legal','tech','team','launch','scale'];
+var KEY = 'angell-arbitrage-progress';
+
+function loadState(){
+  var raw = sGet(KEY);
+  if(!raw) return {steps:{}, checks:{}};
+  try { return JSON.parse(raw); } catch(e){ return {steps:{}, checks:{}}; }
+}
+function saveState(st){ sSet(KEY, JSON.stringify(st)); }
+
+function render(){
+  var st = loadState();
+  var done = 0;
+  STEPS.forEach(function(s){
+    var btn = document.querySelector('.done-btn[data-step="'+s+'"]');
+    var navLink = document.querySelector('.nav a[href="#'+s+'"]');
+    var isDone = !!st.steps[s];
+    if(isDone) done++;
+    if(btn){
+      btn.classList.toggle('is-done', isDone);
+      btn.textContent = isDone ? '\u2713 Step Complete' : 'Mark Step Complete';
+    }
+    if(navLink){ navLink.classList.toggle('nav-done', isDone); }
+  });
+  var pct = Math.round(done / STEPS.length * 100);
+  var fill = document.getElementById('pFill');
+  var label = document.getElementById('pPct');
+  if(fill) fill.style.width = pct + '%';
+  if(label) label.textContent = pct === 100 ? '\uD83C\uDFC6 100% — Blueprint Complete!' : pct + '% complete \u00B7 ' + done + ' of ' + STEPS.length + ' steps';
+  document.querySelectorAll('input[data-ck]').forEach(function(cb){
+    cb.checked = !!st.checks[cb.getAttribute('data-ck')];
+  });
+}
+
+function toggleStep(btn){
+  var st = loadState();
+  var s = btn.getAttribute('data-step');
+  st.steps[s] = !st.steps[s];
+  saveState(st);
+  render();
+}
+
+document.addEventListener('change', function(e){
+  if(e.target && e.target.matches('input[data-ck]')){
+    var st = loadState();
+    st.checks[e.target.getAttribute('data-ck')] = e.target.checked;
+    saveState(st);
+  }
+});
+
+function copyScript(btn){
+  var p = btn.parentElement.querySelector('p');
+  var text = p.innerText;
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(function(){
+      btn.textContent = 'Copied!';
+      setTimeout(function(){ btn.textContent = 'Copy'; }, 1600);
+    });
+  } else {
+    var ta = document.createElement('textarea');
+    ta.value = text; document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); document.body.removeChild(ta);
+    btn.textContent = 'Copied!';
+    setTimeout(function(){ btn.textContent = 'Copy'; }, 1600);
+  }
+}
+
+render();
+</script>
+</div><!-- /angellMain -->
+<script>
+/* ====== ACCESS CODE ======
+   To change the code: edit the line below. Keep it in quotes, UPPERCASE.
+*/
+var ANGELL_ACCESS_CODE = "ANGELL-BNB-2026";
+
+(function(){
+  try{ if(sessionStorage.getItem('angell-unlocked')==='1'){ unlockNow(); } }catch(e){}
+})();
+function unlockNow(){
+  document.body.classList.remove('locked');
+  var g=document.getElementById('angellGate'); if(g) g.style.display='none';
+}
+function checkCode(){
+  var v=(document.getElementById('gateCode').value||'').trim().toUpperCase();
+  var err=document.getElementById('gateErr');
+  if(v===ANGELL_ACCESS_CODE.toUpperCase()){
+    try{ sessionStorage.setItem('angell-unlocked','1'); }catch(e){}
+    unlockNow(); window.scrollTo(0,0);
+  } else {
+    err.textContent='That code isn\'t right — check your email and try again.';
+    document.getElementById('gateCode').value='';
+  }
+}
+document.addEventListener('keydown',function(e){
+  if(e.key==='Enter' && document.activeElement && document.activeElement.id==='gateCode'){ checkCode(); }
+});
+</script>
+</body>
+</html>
